@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pomodoro!</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/homePage.css">
+</head>
+<body>
+
+<nav class="navbar navbar-light navbar-expand-md bg-danger">
+        <span class="navbar-brand mb-0 h1">Pomodoro</span>
+        <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/stats">See Your Study Data Here!</a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" href="/">Home Page</a>
+                </li>
+            </ul>
+      </nav>
+
+    <h1 id = "titleText">Pomodoro</h1>
+    <h2 id = "subTitleText">Stay Focused</h2>
+
+    <form action="/" method="POST">
+        <label class = "formLabel">What Are You Studying Today?</label>
+        <input type="text" name = "subject" required class = "formInput" autocomplete="off">
+        <label class = "formLabel">For How Long?</label>    
+        <label class = "formLabel">Hours: </label>
+        <input name = "timerHours" maxlength="2" id = "hoursBox" required class = "formInput" autocomplete="off">
+        <label class = "formLabel">Minutes: </label>
+        <input name = "timerMinutes" type="text" maxlength="2" id = "minutesBox" required class = "formInput" autocomplete="off">
+        <label class = "formLabel">Seconds: </label>
+        <input name = "timerSeconds" type="text" maxlength="2" id ="secondsBox" required class = "formInput" autocomplete="off">
+        <button type ="submit" class = "formButton btn btn-danger">Start Learning</button>
+    </form> 
+</body>
+<script src = "homePage.js"></script>
+</html>

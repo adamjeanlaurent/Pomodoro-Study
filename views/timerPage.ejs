@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/timerPage.css">
+</head>
+<body>
+    <nav class="navbar navbar-light navbar-expand-md bg-danger">
+        <span class="navbar-brand mb-0 h1">Pomodoro</span>
+        <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="/stats">See Your Study Data Here!</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home Page</a>
+                </li>
+            </ul>
+      </nav>
+
+      <h1 id = "titleText">You're Studying <%= studySubject %></h1>
+      <h2 id = subTitleText>Keep Up The Good Work!</h2>
+    <div class = "clock">
+        <p id = "timer" class = "clockNumbers">0:00</p>
+    </div>  
+    <button id = "resume" class = "resumeBTN btn btn-success">Resume</button>
+    <button id = "pause" class = "pauseBTN btn btn-danger">Pause</button>
+    <script>
+        var timeForTimer = "<%- timerTime %>"
+        timerForTimer = parseInt(timeForTimer , 10);
+    </script>
+</body>
+<script src = "timer.js"></script>
+</html>

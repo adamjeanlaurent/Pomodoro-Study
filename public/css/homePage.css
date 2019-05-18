@@ -1,0 +1,81 @@
+ body{
+    background-color: #7045af;
+    font-family: 'Baloo Bhai', cursive;
+}
+
+#titleText{
+    color: #db2d43;
+    text-align: center;
+    font-size: 90px;
+}
+
+#subTitleText{
+    text-align: center;
+    color: #db2d43;
+    font-size: 45px;
+    margin-bottom: 50px;
+}
+ #titleDiv{
+    margin: auto;
+} 
+
+
+ h1 {
+    text-shadow: 0 1px 0 #ccc,
+                 0 2px 0 #c9c9c9,
+                 0 3px 0 #bbb,
+                 0 4px 0 #b9b9b9,
+                 0 5px 0 #aaa,
+                 0 6px 1px rgba(0,0,0,.1),
+                 0 0 5px rgba(0,0,0,.1),
+                 0 1px 3px rgba(0,0,0,.3),
+                 0 3px 5px rgba(0,0,0,.2),
+                 0 5px 10px rgba(0,0,0,.25),
+                 0 10px 10px rgba(0,0,0,.2),
+                 0 20px 20px rgba(0,0,0,.15);
+  }
+
+   
+  h2 {
+      text-shadow: 0 1px 0 #ccc,
+                   0 2px 0 #c9c9c9,
+                   0 3px 0 #bbb,
+                   0 4px 0 #b9b9b9,
+                   0 5px 0 #aaa,
+                   0 6px 1px rgba(0,0,0,.1),
+                   0 0 5px rgba(0,0,0,.1),
+                   0 1px 3px rgba(0,0,0,.3),
+                   0 3px 5px rgba(0,0,0,.2),
+                   0 5px 10px rgba(0,0,0,.25),
+                   0 10px 10px rgba(0,0,0,.2),
+                   0 20px 20px rgba(0,0,0,.15);
+    }  
+ 
+.formLabel{
+    text-align: center;
+    display: block;
+    margin: auto;
+    margin-bottom: 8px;
+}
+
+
+.formInput{
+    text-align: center;
+    display: block;
+    margin: auto;
+    border-radius: 25px;
+    margin-bottom: 8px;
+    width: 200px;
+}
+
+
+.formButton{
+    text-align: center;
+    display: block;
+    margin: auto;
+    border-radius: 25px;
+    margin-top: 30px;
+    width: 200px;
+}
+
+
