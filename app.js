@@ -2,22 +2,45 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const _ = require('lodash');
-
-mongoose.connect("mongodb://localhost:20717:/pomDB", {useNewUrlParser: true});
-
-// make these required and what not
-const pomodoroSchema = {
-    subject: String,
-    timeInterval: Number
-};
-
-const pomodoroModel = mongoose.model("studySessions", pomodoroSchema);
+const session = require('express-session');
+const passport = require('passport');
+const passportLocalMongoose = require('passport-local-mongoose');
 
 const app = express();
+
+app.use(session({
+    secret: 'Our little secret.',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.set("view engine", "ejs"); 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+
+mongoose.connect("mongodb://localhost:20717:/pomDB", {useNewUrlParser: true});
+
+mongoose.set('useCreateIndex', true);
+
+// make these required and what not
+const pomodoroSchema = new mongoose.Schema({
+    subject: String,
+    timeInterval: Number
+});
+
+pomodoroSchema.plugin(passportLocalMongoose);
+
+const pomodoroModel = mongoose.model("studySessions", pomodoroSchema);
+
+passport.use(pomodoroModel.createStrategy());
+
+passport.serializeUser(pomodoroModel.serializeUser());
+passport.deserializeUser(pomodoroModel.deserializeUser());
+
+//######################################################## END OF BOILERPLATE ############################################
 
 app.get('/', function(req,res){
     res.render('homePage');
@@ -62,6 +85,7 @@ app.post('/', function(req,res){
 
 
 app.get('/stats', function(req,res){
+    // tap into req.user to query the correct user's data
     pomodoroModel.find({}, function(err, studyHistory){
         if(err){
             console.log(err);
