@@ -18,13 +18,33 @@ router.route('/login')
     // when the user posts to the login page we have to do some authorization
     .post((req, res) => {
         // do authorization here
+        const user = new userModel({
+            username: req.body.username,
+            password: req.body.password
+        });
+        //logging in the user
+        req.login(user, (err) => {
+            //if an error occurs , send them back to the login page
+            if(err){
+                console.log('error');
+                res.redirect('/users/login');
+            }
+            // upon a successful login, send them to the home route
+            // upon an unsuccessful login, send them back to the login page
+            else{
+                passport.authenticate('local', {
+                    successRedirect: '/',
+                    failureRedirect: '/users/login'
+                })(req , res);
+            }
+        });
     });
 
 //Register route 
 router.route('/register')
     // Render the register page when user tries to access it
     .get((req, res) => {
-        res.render('users/register');
+        res.render('register');
     })
     .post((req, res) => {
         // sign up user here and do authorization
@@ -41,11 +61,10 @@ router.route('/register')
         }
         // if no errors, authenticate user using passport
         else{
-            // this callback is only triggered if the authentication was successful and we set up a cookie that saved their session
-            passport.authenticate('local')(req, res, () =>{
-                // redirect to the home route to get them to page to set up time
-                res.redirect('/');
-            });
+            passport.authenticate('local', {
+                successRedirect: '/',
+                failureRedirect: '/users/register'
+            })(req , res);
         }
     });
     });

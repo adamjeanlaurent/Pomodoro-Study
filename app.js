@@ -26,12 +26,13 @@ mongoose.connect("mongodb://localhost:20717:/pomDB", {useNewUrlParser: true});
 mongoose.set('useCreateIndex', true);
 
 
-pomodoroSchema.plugin(passportLocalMongoose);
+const userModel = require('./models/userModel');
 
-passport.use(pomodoroModel.createStrategy());
 
-passport.serializeUser(pomodoroModel.serializeUser());
-passport.deserializeUser(pomodoroModel.deserializeUser());
+passport.use(userModel.createStrategy());
+
+passport.serializeUser(userModel.serializeUser());
+passport.deserializeUser(userModel.deserializeUser());
 
 //######################################################## END OF BOILERPLATE ############################################
 

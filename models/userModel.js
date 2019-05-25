@@ -17,7 +17,9 @@ const userSchema = new mongoose.Schema({
         }]},
 });
 
-const pomodoroModel = mongoose.model("User", userSchema);
+userSchema.plugin(passportLocalMongoose);
+
+const userModel = mongoose.model("User", userSchema);
 
 module.exports = userModel;
 

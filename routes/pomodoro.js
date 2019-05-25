@@ -20,39 +20,47 @@ TODO
 // Route for timer and home page
 router.route('/')
     .get((req, res) => {
-        res.render('homePage');
+        if(req.isAuthenticated()){
+            res.render('homePage');
+        }
     })
     .post((req, res) => {
         let studySubject = _.capitalize(req.body.subject);
         let timerHours = parseInt(req.body.timerHours, 10);
         let timerMinutes = parseInt(req.body.timerMinutes, 10);
         let timerSeconds = parseInt(req.body.timerSeconds, 10);
-
+        
         let totalTimeInSeconds = 0;
 
         totalTimeInSeconds += (timerHours * 3600) + (timerMinutes * 60) + timerSeconds;
 
         // store in data base
 
-        //Searches to see if that subject already exist in the database
-        pomodoroModel.findOne({subject: studySubject}, function(err, foundSession){
+        //See if the user has already studied that subject
+        userModel.findOne({username: req.user.username}, function(err, foundUser){
             if(err){
                 console.log(err);
             }
             else{
-                // If it already exists, append to it's total time count to the existing document
-                if(foundSession){
-                    foundSession.timeInterval += totalTimeInSeconds;
-                    foundSession.save();
+                // If the user already has studied that subject, we want to append it to his time for the subject
+                //Searches Through the found user's subject array to see if they've already studied the subject
+                for(let i = 0; i < foundUser.subject.length; i ++){
+                    if(foundUser.subject[i].studySubject){
+                        foundUser.subject[i].studySubject += totalTimeInSeconds;
+                        foundUser.save();
+                        break;
+                    }
+
+                    //If user hasn't studied that subject before, append it to the end
+                    if(i === foundUser.subject.length - 1 && foundUser.subject.length[i] !== studySubject){
+                        foundUser.subject.push({
+                            subject: studySubject,
+                            timeInterval: totalTimeInSeconds
+                        });
+                        break;
+                    }
                 }
-                else{
-                    // if it doesn't exist yet, insert into the collection as a new document
-                    const newPomodoro = new userModel({
-                        subject: studySubject,
-                        timeInterval: totalTimeInSeconds
-                    });
-                    newPomodoro.save();
-                }
+                
             }
         });
         res.render('timerPage', {timerTime: totalTimeInSeconds, studySubject: studySubject});
@@ -61,14 +69,31 @@ router.route('/')
 // Route For Stats Page
     router.route('/stats')
         .get((req, res) => {
-            // tap into req.user to query the correct user's data
-            pomodoroModel.find({}, function(err, studyHistory){
-         if(err){
-            console.log(err);
-        }
-         else{
-            // send study history
-            res.render('graph', {studyHistory: JSON.stringify(studyHistory)});
-        }
+            if(req.isAuthenticated()){
+                userModel.findOne({username: req.user.username}, (err, foundUser) => {
+                    if(err){
+                        console.log(err);
+                    }
+                    else{
+                        res.render('graph', {studyHistory: JSON.stringify(foundUser)});
+                    }
+                });
+            }
+
+            else{
+                res.redirect('/users/login');
+            }
         });
-    });
+
+
+    //         // tap into req.user to query the correct user's data
+    //         pomodoroModel.find({}, function(err, studyHistory){
+    //      if(err){
+    //         console.log(err);
+    //     }
+    //      else{
+    //         // send study history
+    //         res.render('graph', {studyHistory: JSON.stringify(studyHistory)});
+    //     }
+    //     });
+    // });
