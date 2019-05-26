@@ -1,3 +1,18 @@
+/*
+TODO
+    - Re-style whole site ?
+    - Implement flash messages
+    - Check to see if username is a real email
+    - password validation (6 characters & rules etc.)
+    - Add options for different types of charts?
+    - Disable autocomplete
+    - Add instructions on homePage on how to use time form
+    - rename homePage.ejs , and the route for it
+    - Put document titles in the all EJS pages
+    - Favicon
+*/
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -114,10 +129,13 @@ app.route('/users/register')
     });
     });
 
-app.route('/homePage')
+app.route('/homePage')  
     .get((req, res) => {
         if(req.isAuthenticated()){
             res.render('homePage');
+        }
+        else{
+            res.redirect('/users/login');
         }
     })
     .post((req, res) => {
@@ -188,8 +206,18 @@ app.route('/stats')
         else{
             res.redirect('/users/login');
         }
+});
+
+app.route('/')
+    .get((req, res) => {
+        res.render('startPage');
     });
 
+app.route('/logout')
+    .get((req, res) => {
+        req.logout();
+        res.redirect('/');
+    });
 
 app.listen(3000, function(){
     console.log('server listening on port 3000!');

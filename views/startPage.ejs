@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+<nav class="navbar navbar-light navbar-expand-md bg-danger">
+    <span class="navbar-brand mb-0 h1">Pomodoro</span>
+    <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/stats">See Your Study Data Here!</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home Page</a>
+            </li>
+        </ul>
+  </nav>
+
+<div class="jumbotron centered">
+  <div class="container">
+    <i class="fas fa-hourglass-half fa-6x hourglass"></i>
+    <h1 class="display-3">Pomodoro</h1>
+    <p class="lead">Study to accomplish your goals and keep track of your progress along the way!</p>
+    <p id = "subtext">The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. The technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. Each interval is known as a pomodoro, from the Italian word for 'tomato', after the tomato-shaped kitchen timer that Cirillo used as a university student.</p>
+    <hr>
+    <a class="btn btn-light btn-lg" href="/users/register" role="button">Register</a>
+    <a class="btn btn-dark btn-lg" href="/users/login" role="button">Login</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

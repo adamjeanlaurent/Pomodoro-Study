@@ -14,7 +14,10 @@
 						  <a class="nav-link" href="/stats">See Your Study Data Here!</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/">Home Page</a>
+							<a class="nav-link" href="/homePage">Reset Timer</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/logout">Logout</a>
 						</li>
 					</ul>
 			  </nav>
@@ -22,6 +25,7 @@
 <script>
 window.onload = function () {
 	let studyHistoryData = JSON.parse('<%- studyHistory %>');
+	console.log(studyHistoryData);
 	let arr = [];
 	for(let i = 0; i < studyHistoryData.subject.length; i++){
 		arr.push({label: studyHistoryData.subject[i].pomSubject, y: (studyHistoryData.subject[i].timeInterval/3600)});
