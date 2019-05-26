@@ -15,6 +15,10 @@
     font-size: 45px;
     margin-bottom: 50px;
 }
+
+#instructions{
+    font-size: 30px;
+}
  #titleDiv{
     margin: auto;
 } 

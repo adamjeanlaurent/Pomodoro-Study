@@ -1,6 +1,5 @@
 /*
 TODO
-    - Re-style whole site ?
     - Implement flash messages
     - Check to see if username is a real email
     - password validation (6 characters & rules etc.)
@@ -113,8 +112,12 @@ app.route('/users/register')
         Checks if username is unique. See login example. 
         Seems to return an object with err.name and err.message if error
         */
+
+        //check for errors in user password
+        let password = req.body.password;
+
        //register the user, and create a new docuent for the pomodoro collection and intitalize as empty
-       userModel.register({username: req.body.username}, req.body.password, (err, user) => {
+       userModel.register({username: req.body.username}, password, (err, user) => {
         if(err){
             console.log(err.message);
             res.redirect('/users/register');
