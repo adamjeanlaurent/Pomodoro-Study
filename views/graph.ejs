@@ -23,8 +23,8 @@
 window.onload = function () {
 	let studyHistoryData = JSON.parse('<%- studyHistory %>');
 	let arr = [];
-	for(let i = 0; i < studyHistoryData.length; i++){
-		arr.push({label: studyHistoryData[i].subject, y: (studyHistoryData[i].timeInterval/3600)});
+	for(let i = 0; i < studyHistoryData.subject.length; i++){
+		arr.push({label: studyHistoryData.subject[i].pomSubject, y: (studyHistoryData.subject[i].timeInterval/3600)});
 		arr[i].y = parseFloat(arr[i].y.toFixed(2));
 	}
 

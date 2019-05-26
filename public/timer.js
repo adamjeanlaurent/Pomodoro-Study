@@ -65,7 +65,3 @@ function timeIt(){
         pauseBTN.style.display = "none";
     }
 }
-
-
-
-
