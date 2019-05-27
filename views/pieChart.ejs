@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="/css/timerPage.css">
 		<link rel="icon" 
@@ -23,49 +23,43 @@
 					</ul>
 			  </nav>
 <script>
-window.onload = function () {
-
-	//parsing data for input into chart
+window.onload = function() {
+    //parsing data for input into chart
 	let studyHistoryData = JSON.parse('<%- studyHistory %>');
-	let arr = [];
+    let arr = [];
+    let totalTimeStudied = '<%- totalTimeStudied %>';
+        
 	for(let i = 0; i < studyHistoryData.subject.length; i++){
-		arr.push({label: studyHistoryData.subject[i].pomSubject, y: (studyHistoryData.subject[i].timeInterval/3600)});
-		arr[i].y = parseFloat(arr[i].y.toFixed(2));
-	}
+		arr.push({label: studyHistoryData.subject[i].pomSubject, y: (studyHistoryData.subject[i].timeInterval/totalTimeStudied) * 100});
+		// arr[i].y = parseFloat(arr[i].y.toFixed(2)) *100;
+    }
+
+    console.log(totalTimeStudied);
+    console.log(arr);
 
 var chart = new CanvasJS.Chart("chartContainer", {
 	animationEnabled: true,
-	
-	title:{
-		text:"Subject Studied By Hours"
-	},
-	axisX:{
-		interval: 1
-	},
-	axisY2:{
-		interlacedColor: "rgba(1,77,101,.2)",
-		gridColor: "rgba(1,77,101,.1)",
-		title: "Subjects Studied"
+	title: {
+		text: "Total Time Studied <%- (totalTimeStudied/3600).toFixed(2) %> Hours"
 	},
 	data: [{
-		type: "bar",
-		name: "companies",
-		axisYType: "secondary",
-		color: "#db2d43",
+		type: "pie",
+		startAngle: 240,
+		yValueFormatString: "##0.00\"%\"",
+		indexLabel: "{label} {y}",
 		dataPoints: arr
 	}]
 });
-	chart.render();
+chart.render();
+
 }
 </script>
 </head>
 <body>
-	<form action="/stats/pie">
-		<button type = "submit" class = "chartButton btn btn-success">Click For Pie Chart</button>
-	</form>
+        <form action="/stats">
+            <button type = "submit" class = "chartButton btn btn-success">Click For Bar Graph</button>
+        </form>
 <div id="chartContainer" style="height: 500px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 </html>
-
-

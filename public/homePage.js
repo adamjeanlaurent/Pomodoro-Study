@@ -1,4 +1,4 @@
-
+// This code ensure that on the homePage, the user is only able to type numeric input and up to 2 characters for each field
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function(event) {
       textbox.addEventListener(event, function() {

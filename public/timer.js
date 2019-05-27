@@ -1,3 +1,4 @@
+//Generates the interactable timer on the timer page
 let timer = document.getElementById('timer');
 let pauseBTN = document.getElementById('pause');
 let resumeBTN = document.getElementById('resume');
@@ -23,13 +24,14 @@ let interval = setInterval(timeIt, 1000);
 pauseBTN.click();
 
 if (timeLeft === 0){
-    clearInterval(interval); // stops the time interval
+    clearInterval(interval); //stops the time interval
     resumeBTN.style.display = "none";
     pauseBTN.style.display = "none";
 }
 
 let alarm = new Audio('alarm.mp3');
 
+// function that converts amount of seconds into hr/min/sec format
 function convertSeconds(s){
     let hour = 0;
     if(s >= 3600){
@@ -54,7 +56,7 @@ function convertSeconds(s){
 }
 
 function timeIt(){
-    //make a check in the server, to make sure the user's time is greater than 0 , and perhaps lower than 24 hours?
+    //make a check in the server, to make sure the user's time is greater than 0
     counter++;
     timer.innerHTML = convertSeconds(timeLeft - counter);
 

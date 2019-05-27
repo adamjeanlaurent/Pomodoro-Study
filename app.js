@@ -51,11 +51,11 @@ passport.use(userModel.createStrategy());
 passport.serializeUser(userModel.serializeUser());
 passport.deserializeUser(userModel.deserializeUser());
 
-//######################################################## END OF BOILERPLATE ############################################
+//######################################################## END OF BOILERPLATE ###########################################################################
 
 //routes
 app.route('/users/login')
-    // when the user trys to access the login page, send it to them
+    // when the user trys to access the login page, render it 
     .get((req, res) => {
         res.render('login');
     })
@@ -70,13 +70,13 @@ app.route('/users/login')
         });
         //logging in the user
         req.login(user, (err) => {
-            //if an error occurs , send them back to the login page
+            //if an error occurs , send the user back to the login page
             if(err){
                 res.redirect('/users/login');
                 console.log(err);
             }
-            // upon a successful login, send them to the home route
-            // upon an unsuccessful login, send them back to the login page with error message
+            // upon a successful login, send the user to the home route
+            // upon an unsuccessful login, send the user back to the login page to try again
             else{
                 passport.authenticate('local', {
                     successRedirect: '/homePage',
@@ -93,12 +93,6 @@ app.route('/users/register')
         res.render('register');
     })
     .post((req, res) => {
-        /* this .regsiter (from passport-local-mongoose) register(user, password, cb) 
-        Convenience method to register a new user instance with a given password. 
-        Checks if username is unique. See login example. 
-        Returns an object with err.name and err.message if error
-        */
-
         let password = req.body.password;
         let username = req.body.username;
         let errors = [];
@@ -129,7 +123,7 @@ app.route('/users/register')
             return res.render(('register'), {errors: errors, name: username, password: password});
         }
 
-       //register the user, and create a new document for the pomodoro collection and intitalize it as empty
+       //register the user, and create a new document for the users collection and intitalize it's subject array as empty
        userModel.register({username: req.body.username}, password, (err, user) => {
         if(err){
             console.log(err.message);
@@ -176,7 +170,8 @@ app.route('/homePage')
                 minutes: req.body.timerMinutes, 
                 seconds: req.body.timerSeconds});
         }
-
+        
+        // parsing data after checking for errors
         let studySubject = _.capitalize(req.body.subject);
         let timerHours = parseInt(req.body.timerHours, 10);
         let timerMinutes = parseInt(req.body.timerMinutes, 10);
@@ -192,8 +187,7 @@ app.route('/homePage')
                 console.log(err);
             }
             else{
-                // If the user already has studied that subject, we want to append it to his time for the subject
-                //Searches Through the found user's subject array to see if they've already studied the subject
+                // If the user already has studied that subject, we want to append it to their existing time for that subject
                 for(let i = 0; i < foundUser.subject.length; i++){
                     if(_.capitalize(foundUser.subject[i].pomSubject) === studySubject){
                         foundUser.subject[i].timeInterval += totalTimeInSeconds;
@@ -212,7 +206,7 @@ app.route('/homePage')
                     }
 
                 }
-                // If the user hasn't studied a subject before
+                // If the user hasn't studied a subject before create a new index in their subject array
                  if(foundUser.subject.length === 0){
                     foundUser.subject.push({
                          pomSubject: studySubject,
@@ -225,7 +219,7 @@ app.route('/homePage')
         res.render('timerPage', {timerTime: totalTimeInSeconds, studySubject: studySubject});
     });
 
-// Route For Stats Page
+// Route For Stats Page with Bar Graph
 app.route('/stats')
     .get((req, res) => {
         if(req.isAuthenticated()){
@@ -244,11 +238,37 @@ app.route('/stats')
         }
 });
 
+// Route For Stats Page with Pie Chart
+app.route('/stats/pie')
+    .get((req, res) => {
+        if(req.isAuthenticated()){
+            userModel.findOne({username: req.user.username}, (err, foundUser) => {
+                if(err){
+                    console.log(err);
+                }
+                else{
+                    // Getting the total amount of time the user has studied every subject
+                    let totalTimeStudied = 0;
+                    foundUser.subject.forEach((subject) => {
+                        totalTimeStudied += subject.timeInterval;
+                    })
+                    res.render('pieChart', {studyHistory: JSON.stringify(foundUser), totalTimeStudied: totalTimeStudied});
+                }
+            });
+        }
+
+        else{
+            res.redirect('/users/login');
+        }
+});
+
+// Startup page route
 app.route('/')
     .get((req, res) => {
         res.render('startPage');
     });
 
+//logout route
 app.route('/logout')
     .get((req, res) => {
         req.logout();
