@@ -7,6 +7,10 @@
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="css/timerPage.css">
+		<link rel="icon" 
+      type="image/png" 
+	  href="tomato.png">
+	  <title>Pomodoro!</title>
 		<nav class="navbar navbar-light navbar-expand-md bg-danger">
 				<span class="navbar-brand mb-0 h1">Pomodoro</span>
 				<ul class="navbar-nav ml-auto">
@@ -21,11 +25,11 @@
 						</li>
 					</ul>
 			  </nav>
-		
 <script>
 window.onload = function () {
+
+	//parsing data for input into chart
 	let studyHistoryData = JSON.parse('<%- studyHistory %>');
-	console.log(studyHistoryData);
 	let arr = [];
 	for(let i = 0; i < studyHistoryData.subject.length; i++){
 		arr.push({label: studyHistoryData.subject[i].pomSubject, y: (studyHistoryData.subject[i].timeInterval/3600)});
@@ -54,8 +58,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dataPoints: arr
 	}]
 });
-chart.render();
-
+	chart.render();
 }
 </script>
 </head>
