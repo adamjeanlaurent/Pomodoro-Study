@@ -15,7 +15,7 @@ Installation:
 
 To Start Server:
 
-Open A new terminal session and run `mongod`, and run `node app.js` in the project directory
+Open A new terminal session and run `mongod`, and run `node app.js` in the project directory.
 
 To Visit App:
 
