@@ -27,6 +27,6 @@ To Visit App:
 
 - This was a huge learning experience because it's the first time i've built an application of this scale, and one of the main challenges I ran into was authentication.
 
-- After a few days of research and reading documentation I decided to use the local strategy Passport.js for authentication, and express-session for creating cookies and sessions.
+- After a few days of research and reading documentation I decided to use the Passport.js's local strategy for authentication, and express-session for creating cookies and sessions.
 
 - The entire list of technologies used here are, JavaScript, HTML, CSS, Passport.js, EJS, Node.js, Express.js, CanvasJS, express-session, Mongoose, MongoDB, Lodash, and a few other NPM packages.
