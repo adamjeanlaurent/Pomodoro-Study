@@ -1,52 +1,64 @@
-<!DOCTYPE html>
+
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Pomodoro!</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/homePage.css">
-    <link rel="icon" 
-      type="image/png" 
-      href="tomato.png">
+    <link rel="icon" type="image/png" href="tomato.png">
 </head>
+
 <body>
 
-<nav class="navbar navbar-light navbar-expand-md bg-danger">
+    <nav class="navbar navbar-light navbar-expand-md bg-danger">
         <span class="navbar-brand mb-0 h1">Pomodoro</span>
         <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="/stats">See Your Study Data Here!</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link" href="/homePage">Reset Timer</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-            </ul>
-      </nav>
+            <li class="nav-item">
+                <a class="nav-link" href="/stats">See Your Study Data Here!</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/homePage">Reset Timer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </nav>
 
-    <h1 id = "titleText">Pomodoro</h1>
-    <h2 id = "subTitleText">Stay Focused</h2>
+    <h1 id="titleText">Pomodoro</h1>
+    <h2 id="subTitleText">Stay Focused</h2>
 
     <% include ./partials/messages %>
 
     <form action="/homePage" method="POST">
-        <label class = "formLabel">What Are You Studying Today?</label>
-        <input type="text" name = "subject" class = "formInput" autocomplete="off" value="<%= typeof subject != 'undefined' ? subject : '' %>">
-        <label class = "formLabel">For How Long?</label>    
-        <label class = "formLabel">Hours: </label>
-        <input name = "timerHours" maxlength="2" id = "hoursBox"  class = "formInput" autocomplete="off" value="<%= typeof hours != 'undefined' ? hours : '' %>">
-        <label class = "formLabel">Minutes: </label>
-        <input name = "timerMinutes" type="text" maxlength="2" id = "minutesBox"  class = "formInput" autocomplete="off" value="<%= typeof minutes != 'undefined' ? minutes : '' %>">
-        <label class = "formLabel">Seconds: </label>
-        <input name = "timerSeconds" type="text" maxlength="2" id ="secondsBox"  class = "formInput" autocomplete="off" value="<%= typeof seconds != 'undefined' ? seconds : '' %>">
-        <button type ="submit" class = "formButton btn btn-danger">Start Learning</button>
-    </form> 
+        <label class="formLabel">What Are You Studying Today?</label>
+        <input type="text" name="subject" class="formInput" autocomplete="off"
+            value="<%= typeof subject != 'undefined' ? subject : '' %>">
+        <label class="formLabel">For How Long?</label>
+        <label class="formLabel">Hours: </label>
+        <input name="timerHours" maxlength="2" id="hoursBox" class="formInput" autocomplete="off"
+            value="<%= typeof hours != 'undefined' ? hours : '' %>">
+        <label class="formLabel">Minutes: </label>
+        <input name="timerMinutes" type="text" maxlength="2" id="minutesBox" class="formInput" autocomplete="off"
+            value="<%= typeof minutes != 'undefined' ? minutes : '' %>">
+        <label class="formLabel">Seconds: </label>
+        <input name="timerSeconds" type="text" maxlength="2" id="secondsBox" class="formInput" autocomplete="off"
+            value="<%= typeof seconds != 'undefined' ? seconds : '' %>">
+        <button type="submit" class="formButton btn btn-danger">Start Learning</button>
+    </form>
 </body>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script src = "homePage.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="homePage.js"></script>
+
 </html>
