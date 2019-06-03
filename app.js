@@ -1,3 +1,9 @@
+/*
+    Main server file where pages are rendered, and requests are handled.
+*/
+
+//Boilerplate code to set up packages
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -27,6 +33,8 @@ mongoose.connect("mongodb://localhost:20717:/pomDB", {useNewUrlParser: true});
 
 mongoose.set('useCreateIndex', true);
 
+
+// Database Schema
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -53,7 +61,8 @@ passport.deserializeUser(userModel.deserializeUser());
 
 //######################################################## END OF BOILERPLATE ###########################################################################
 
-//routes
+// Start Of Routes
+
 app.route('/users/login')
     // when the user trys to access the login page, render it 
     .get((req, res) => {
@@ -75,8 +84,10 @@ app.route('/users/login')
                 res.redirect('/users/login');
                 console.log(err);
             }
-            // upon a successful login, send the user to the home route
-            // upon an unsuccessful login, send the user back to the login page to try again
+            /* 
+             upon a successful login, send the user to the home page
+             upon an unsuccessful login, send the user back to the login page to try again
+            */
             else{
                 passport.authenticate('local', {
                     successRedirect: '/homePage',
@@ -111,22 +122,22 @@ app.route('/users/register')
         if(!isemail.validate(username)){
             errors.push({msg: 'Invalid Email Address'});
         }
-
+        
+        // Check if username is already taken
         userModel.findOne({username: username}, (err, foundUser) => {
             if(foundUser){
                 errors.push({msg: 'Email Taken By Another User'});
             }
         });
         
-        //if there are errors re-render register page with errors
+        // if there are errors re-render register page with error messsages
         if(errors.length > 0){
             return res.render(('register'), {errors: errors, name: username, password: password});
         }
 
-       //register the user, and create a new document for the users collection and intitalize it's subject array as empty
+       //register the user, and create a new document for the users collection
        userModel.register({username: req.body.username}, password, (err, user) => {
         if(err){
-            console.log(err.message);
             res.redirect('/users/register');
         }
         // if no errors, authenticate user using passport
@@ -142,6 +153,7 @@ app.route('/users/register')
 //home page route
 app.route('/homePage')  
     .get((req, res) => {
+        // check if user authentiacted 
         if(req.isAuthenticated()){
             res.render('homePage');
         }
@@ -157,12 +169,12 @@ app.route('/homePage')
             errors.push({msg: 'Please Fill In All Fields'});
         }
 
-        //check for non-numeric input for the timer
+        // check for non-numeric input for the timer
         if(isNaN(req.body.timerHours) || isNaN(req.body.timerMinutes || isNaN(req.body.timerSeconds))){
             errors.push({msg: 'Please Put Numeric Input For Time'});
         }
 
-        //Render the page with errors if there are any
+        // Render the page with errors if there are any
         if(errors.length > 0){
             return res.render('homePage', {errors: errors, 
                 subject: req.body.subject, 
@@ -181,13 +193,13 @@ app.route('/homePage')
 
         totalTimeInSeconds += (timerHours * 3600) + (timerMinutes * 60) + timerSeconds;
 
-        //check if the user has already studied that subject
+        // check if the user has already studied that subject
         userModel.findOne({username: req.user.username}, function(err, foundUser){
             if(err){
                 console.log(err);
             }
             else{
-                // If the user already has studied that subject, we want to append it to their existing time for that subject
+                // If the user already has studied that subject, we want to append it their requested study time to their existing time for that subject
                 for(let i = 0; i < foundUser.subject.length; i++){
                     if(_.capitalize(foundUser.subject[i].pomSubject) === studySubject){
                         foundUser.subject[i].timeInterval += totalTimeInSeconds;
@@ -195,7 +207,7 @@ app.route('/homePage')
                         break;
                     }
 
-                    //If user hasn't studied that subject before, append it to the end
+                    //If user hasn't studied that subject before, create a new index on their subject array 
                     else if(i === foundUser.subject.length - 1 && _.capitalize(foundUser.subject[i].pomSubject) !== studySubject){
                         foundUser.subject.push({
                             pomSubject: studySubject,
@@ -206,7 +218,7 @@ app.route('/homePage')
                     }
 
                 }
-                // If the user hasn't studied a subject before create a new index in their subject array
+                // If the user hasn't studied any subjects before create a new index in their subject array
                  if(foundUser.subject.length === 0){
                     foundUser.subject.push({
                          pomSubject: studySubject,
@@ -222,6 +234,7 @@ app.route('/homePage')
 // Route For Stats Page with Bar Graph
 app.route('/stats')
     .get((req, res) => {
+        // check if user authentiacted 
         if(req.isAuthenticated()){
             userModel.findOne({username: req.user.username}, (err, foundUser) => {
                 if(err){
@@ -241,6 +254,7 @@ app.route('/stats')
 // Route For Stats Page with Pie Chart
 app.route('/stats/pie')
     .get((req, res) => {
+        // check if user authentiacted 
         if(req.isAuthenticated()){
             userModel.findOne({username: req.user.username}, (err, foundUser) => {
                 if(err){
@@ -275,6 +289,6 @@ app.route('/logout')
         res.redirect('/');
     });
 
-app.listen(3000, function(){
+app.listen(3000, () => {
     console.log('server listening on port 3000!');
 });
