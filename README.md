@@ -1,5 +1,22 @@
 # Pomodoro Study
-Pomodro Web Application To Help You Study! Built With JavaScript, Node.js, Express.js, MongoDB, EJS, HTML, CSS, and a few other tools and packages. Site is deployed here using Heroku and MongoDB Atlas http://pomodorostudy.herokuapp.com/
+Pomodro Web Application To Help You Study! Built With JavaScript, Node.js, Express.js, MongoDB, EJS, HTML, CSS, and a few other tools and packages. 
+
+Site is deployed here using Heroku and MongoDB Atlas http://pomodorostudy.herokuapp.com/
+
+The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. The technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. Each interval is known as a pomodoro, from the Italian word for 'tomato', after the tomato-shaped kitchen timer that Cirillo used as a university student.
+
+## How To Use
+
+- Register an account
+
+- Type a subject of your choosing along with a time interval
+
+- Start Timer and Study!
+
+- When the timer runs out, an alarm will play for a few seconds
+
+- Either reset the timer or go to the stats page to see your study data visualized! 
+
 
 ## Gif Of Usage
 
