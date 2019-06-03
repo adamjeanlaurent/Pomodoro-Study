@@ -1,71 +1,72 @@
 <!DOCTYPE HTML>
 <html>
+
 <head>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="/css/timerPage.css">
-		<link rel="icon" 
-      type="image/png" 
-	  href="tomato.png">
-	  <title>Pomodoro!</title>
-		<nav class="navbar navbar-light navbar-expand-md bg-danger">
-				<span class="navbar-brand mb-0 h1">Pomodoro</span>
-				<ul class="navbar-nav ml-auto">
-						<li class="nav-item">
-						  <a class="nav-link" href="/stats">See Your Study Data Here!</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/homePage">Reset Timer</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/logout">Logout</a>
-						</li>
-					</ul>
-			  </nav>
-<script>
-window.onload = function () {
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Bhai&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/timerPage.css">
+    <link rel="icon" type="image/png" href="tomato.png">
+    <title>Pomodoro!</title>
+    <nav class="navbar navbar-light navbar-expand-md bg-danger">
+        <span class="navbar-brand mb-0 h1">Pomodoro</span>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/stats">See Your Study Data Here!</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/homePage">Reset Timer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </nav>
+    <script>
+        window.onload = function () {
+            //parsing data for input into chart
+            let studyHistoryData = JSON.parse('<%- studyHistory %>');
+            let arr = [];
+            for (let i = 0; i < studyHistoryData.subject.length; i++) {
+                arr.push({
+                    label: studyHistoryData.subject[i].pomSubject,
+                    y: (studyHistoryData.subject[i].timeInterval / 3600)
+                });
+                arr[i].y = parseFloat(arr[i].y.toFixed(2));
+            }
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
 
-	//parsing data for input into chart
-	let studyHistoryData = JSON.parse('<%- studyHistory %>');
-	let arr = [];
-	for(let i = 0; i < studyHistoryData.subject.length; i++){
-		arr.push({label: studyHistoryData.subject[i].pomSubject, y: (studyHistoryData.subject[i].timeInterval/3600)});
-		arr[i].y = parseFloat(arr[i].y.toFixed(2));
-	}
-
-var chart = new CanvasJS.Chart("chartContainer", {
-	animationEnabled: true,
-	
-	title:{
-		text:"Subject Studied By Hours"
-	},
-	axisX:{
-		interval: 1
-	},
-	axisY2:{
-		interlacedColor: "rgba(1,77,101,.2)",
-		gridColor: "rgba(1,77,101,.1)",
-		title: "Subjects Studied"
-	},
-	data: [{
-		type: "bar",
-		name: "companies",
-		axisYType: "secondary",
-		color: "#db2d43",
-		dataPoints: arr
-	}]
-});
-	chart.render();
-}
-</script>
+                title: {
+                    text: "Subject Studied By Hours"
+                },
+                axisX: {
+                    interval: 1
+                },
+                axisY2: {
+                    interlacedColor: "rgba(1,77,101,.2)",
+                    gridColor: "rgba(1,77,101,.1)",
+                    title: "Subjects Studied"
+                },
+                data: [{
+                    type: "bar",
+                    name: "companies",
+                    axisYType: "secondary",
+                    color: "#db2d43",
+                    dataPoints: arr
+                }]
+            });
+            chart.render();
+        }
+    </script>
 </head>
+
 <body>
-	<form action="/stats/pie">
-		<button type = "submit" class = "chartButton btn btn-success">Click For Pie Chart</button>
-	</form>
-<div id="chartContainer" style="height: 500px; width: 100%;"></div>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <form action="/stats/pie">
+        <button type="submit" class="chartButton btn btn-success">Click For Pie Chart</button>
+    </form>
+    <div id="chartContainer" style="height: 500px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
+
 </html>
-
-
